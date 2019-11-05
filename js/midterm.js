@@ -155,7 +155,7 @@ function makeLabels() {
     .attr('y', 30)
     .attr('id', "title")
     .style('font-size', '18pt')
-    .text("Pokemon by Total Stats and Sp. Def")
+    .text("Pokemon by Special Defense and Total Stats")
 
   svgScatterPlot.append('text')
     .attr('x', 570)
