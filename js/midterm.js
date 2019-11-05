@@ -53,9 +53,9 @@ d3.csv("./data/pokemon.csv")
         gen = parseInt(d3.select(this).property('value'))
         makeScatterPlot(gen, showingLeg, funcs)
       })
-    d3.selectAll('.leg-checkbox').on('change', function() {
+    d3.selectAll('.leg-radio').on('change', function() {
       let cb = d3.select(this)
-      showingLeg = parseCheckboxes(cb.property('value'), cb.property('checked'))
+      showingLeg = cb.property('value')
       makeScatterPlot(gen, showingLeg, funcs)
       })
     })
@@ -63,9 +63,6 @@ d3.csv("./data/pokemon.csv")
 
 function populateDropdown() {
   let extent = d3.extent(pokemonData.map((row) => row["Generation"]))
-  console.log(parseInt(extent[1]))
-  console.log((parseInt(extent[1]) + 1) + "")
-  console.log(d3.range(extent[0], (parseInt(extent[1]) + 1) + "", 1))
   d3.select('#dropdown').selectAll("option")
     .data(d3.range((parseInt(extent[0]) - 1), (parseInt(extent[1]) + 1), 1))
   .enter().append("option")
@@ -76,13 +73,9 @@ function populateDropdown() {
 }
 
 
-function parseCheckboxes(val, checked) {
-  let all = document.querySelector('.leg-checkbox[value="all"]')
-  let select = document.querySelector('.leg-checkbox[value="true"]')
-  let nonselect = document.querySelector('.leg-checkbox[value="false"]')
-  if (val == 'all' && !checked) {
-    select.checked = false
-    nonselect.checked = false
+function parseCheckboxes(val) {
+  if (val == 'all') {
+    return 'll'
   }
   if (val == 'all' && checked) {
     select.checked = true
@@ -142,14 +135,11 @@ function filterByGen(gen) {
 }
 
 function filterByLeg(leg) {
-  console.log(leg)
   if (leg == 'none') {
     data = []
   }
   if (leg == 'true') {
-    console.log(data[0]['Legendary'])
     data = data.filter((row) => row['Legendary'] == "TRUE")
-    console.log(data)
   }
   if (leg == 'false') {
     data = data.filter((row) => row['Legendary'] == 'FALSE')
@@ -199,7 +189,7 @@ function plotData(map) {
       .attr('r', 8)
       .style('stroke', '#025D8C')
       .style('stroke-width', '1')
-      .style('fill', function(d) {console.log(d['Name'] + " " + d['Type 1'] + " " + colors[d['Type 1']]); return colors[d['Type 1']];})
+      .style('fill', function(d) {return colors[d['Type 1']];})
       .on("mouseover", (d) => {
         div.transition()
           .duration(200)
@@ -218,7 +208,7 @@ function plotData(map) {
     .attr('cx', xMap)
     .attr('cy', yMap)
     .attr('r', 8)
-    .style('fill', function(d) {console.log(d['Name'] + " " + d['Type 1'] + " " + colors[d['Type 1']]); return colors[d['Type 1']];})
+    .style('fill', function(d) {return colors[d['Type 1']];})
   drawLegend();
 }
 
