@@ -122,7 +122,7 @@ function makeScatterPlot(gen, showingLeg, funcs) {
     .attr('y', 30)
     .attr('id', "title")
     .style('font-size', '18pt')
-    .text("Pokemon by Total Stats and Sp. Def")
+    .text("Pokemon by Special Defense and Total Stats")
 }
 
 function filterByGen(gen) {
@@ -213,6 +213,12 @@ function plotData(map) {
 }
 
 function drawLegend() {
+  svgScatterPlot.append('text')
+  .attr('x', 1200)
+  .attr('y', 40)
+  .attr('id', "title")
+  .style('font-size', '12pt')
+  .text("Type 1")
   let legend = svgScatterPlot.selectAll(".legend")
   .data(Object.keys(colors))
 .enter().append("g")
@@ -223,11 +229,12 @@ legend.append("rect")
   .attr("x", m.width - 18)
   .attr("width", 18)
   .attr("height", 18)
+  .attr("y", 50)
   .style("fill", function(d) { return colors[d]; });
 
 legend.append("text")
   .attr("x", m.width - 24)
-  .attr("y", 9)
+  .attr("y", 59)
   .attr("dy", ".35em")
   .style("text-anchor", "end")
   .text(function(d) { return d;})
